@@ -1,0 +1,120 @@
+# Notes for agents working on this repository
+
+## Running the app in the Base44 sandbox
+
+The sandbox runs the full stack from the cloned source with Docker Compose
+(`docker-compose.base44.yml`). Do not build the app with its own production
+tooling here — the compose file bind-mounts `backend/` and `frontend/` and runs
+the development servers with live reload.
+
+```bash
+docker compose -f docker-compose.base44.yml up -d --build
+docker compose -f docker-compose.base44.yml --profile setup run --rm seed   # demo data
+```
+
+| Service | Purpose | Host port |
+| --- | --- | --- |
+| `web` | Vite dev server — preview entry point | 3000 |
+| `api` | Express + Socket.IO via nodemon | 8000 (container `PORT=5000`) |
+| `mongo` | MongoDB 7 (`mongodb://mongo:27017/barber-management`) | internal |
+| `redis` | Redis 7 (Bull queues) | internal |
+| `seed` | One-shot demo-data job, behind the `setup` profile | – |
+
+### Demo data is required to sign in
+
+Nothing seeds users automatically, so a fresh database has no accounts and the
+login screen cannot be used. Run the seed job once after the first boot:
+
+```bash
+docker compose -f docker-compose.base44.yml --profile setup run --rm seed
+```
+
+`src/seed/index.js` **deletes every collection** (users, branches, barber
+profiles, services, chairs, appointments, payments, queues, audit logs) before
+rebuilding the demo dataset, so it sits behind the `setup` profile and a plain
+`up` never starts it. Seeded accounts: `admin@barber.com` / `admin123`,
+`barber@barber.com` / `barber123`, `sara@barber.com` / `barber123` (second
+barber), `customer@barber.com` / `customer123`, `hina@barber.com` /
+`customer123`, `bilal@barber.com` / `customer123`.
+
+The fixtures themselves live in `src/seed/demoData.js` (`ensureDemoData()`),
+which is idempotent: it looks up each record by its natural key (email, branch
+code, service name) and only creates what is missing. To fill a database that
+already has accounts and records — the common case in the sandbox — run it
+without the wipe:
+
+```bash
+docker compose -f docker-compose.base44.yml exec -T api npm run seed:demo
+```
+
+It creates 2 branches, 2 barbers, 5 services, 8 chairs, 10 appointments
+(completed / in progress / confirmed / booked / cancelled / no-show /
+rescheduled, dated relative to "now"), 5 payments (paid, refunded, pending),
+3 queue entries and 6 audit-log rows. Activity rows are skipped if appointments
+already exist, so re-running never duplicates them.
+
+The seed hands those passwords to the model in plain text: `User` has a
+`pre`-`save` hook that hashes the password, so hashing it inside the seed too
+produced double-hashed values that could never match at login. Every code path
+that creates users must pass a plain password.
+
+### Configuration quirks worth knowing
+
+- **The API cannot boot without `STRIPE_SECRET_KEY`.** `src/config/stripe.js` and
+  `payment.webhook.service.js` construct a `Stripe` client at import time and the
+  SDK throws on a missing key. `.env.base44-defaults` supplies a non-functional
+  placeholder so the service starts; real credentials can be added as secrets and
+  override it (that file is the _first_ `env_file`, `/run/base44/app.env` is last).
+- **Frontend API/socket URLs are absolute and come from the environment.**
+  Compose sets `VITE_API_BASE_URL` and `VITE_SOCKET_URL` to the public API host
+  (`https://8000-$BASE44_PUBLIC_HOST_SUFFIX/api/v1`), matching the two-origin
+  layout documented in `frontend/.env.example`. Vite exposes `VITE_*` variables
+  from `process.env`, so no `.env` file is needed inside `frontend/`.
+- **CORS allowlist.** `backend/src/app.js` always allows `http://localhost:5173`
+  and additionally allows the preview origin (`https://3000-$BASE44_PUBLIC_HOST_SUFFIX`)
+  only when `BASE44_PREVIEW_MODE === "1"`, which the platform sets for sandbox
+  commands. With the flag unset the original single-origin behaviour is intact.
+- **Vite host check.** The `web` service receives the platform's
+  `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` so the proxied preview host is accepted.
+- `npm run dev` in `backend/` passes `--experimental-json-modules`; Node 22 (used
+  by the compose file) still accepts the flag.
+- Socket.IO's CORS default (`origin` unset, i.e. `*`) is what the app relies on;
+  `FRONTEND_URL` is intentionally not set.
+- Optional integrations degrade instead of failing: unset Cloudinary credentials
+  make image upload return 503, and unset SMTP makes notification emails fail at
+  send time (the transporter is created lazily). Without
+  `VITE_STRIPE_PUBLISHABLE_KEY`, `loadStripe` is not called at all (it rejects
+  with "Expected publishable key to be of type string" otherwise, as an uncaught
+  exception on every page load) and the payment modal shows a "no Stripe
+  publishable key" notice instead of the card element. Pass the user's Stripe
+  keys through secrets to enable payments.
+
+## Deploying for real
+
+The sandbox compose file is development only. `docker-compose.prod.yml` plus
+`backend/Dockerfile`, `frontend/Dockerfile` and `frontend/nginx.conf` run the
+same app on one origin (nginx serves the built SPA and proxies `/api` and
+`/socket.io` to the API, so no CORS entry is needed). `DEPLOYMENT.md` has the
+full steps; the short version:
+
+```bash
+cp .env.prod.example .env.prod     # real secrets; the file is gitignored
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+```
+
+`--env-file` matters: the frontend's `VITE_*` values are build args interpolated
+from that file. `WEB_PORT` defaults to 80; put a TLS terminator in front.
+
+### How to verify the stack
+
+```bash
+curl -fsS http://localhost:8000/health                   # API liveness
+curl -sS -o /dev/null -w '%{http_code}\n' \
+  http://localhost:8000/api/v1/dashboard/admin           # protected: expects 401 without a token
+curl -fsS http://localhost:3000/ | head                  # Vite serves the SPA shell
+```
+
+For a real end-to-end check, sign in at `/login` with `admin@barber.com` /
+`admin123` and load an admin route such as `/admin/dashboard`. API requests from
+the browser go to the public API origin on port 8000, so a successful login also
+proves the CORS allowlist and the database are wired correctly.

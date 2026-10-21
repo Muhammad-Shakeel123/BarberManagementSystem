@@ -1,0 +1,111 @@
+# Production stack for a plain Docker host (VPS).
+#
+# One public origin: nginx serves the built SPA and proxies /api and /socket.io
+# to the API, so the browser only ever talks to the site's own hostname.
+#
+#   cp .env.prod.example .env.prod          # fill in real secrets
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml \
+#     --profile setup run --rm seed          # optional: demo data (wipes collections)
+#
+# See DEPLOYMENT.md.
+name: barber-management-prod
+
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    command: ["mongod", "--bind_ip_all"]
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test:
+        ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  redis:
+    image: redis:7
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+  api:
+    build: ./backend
+    restart: always
+    env_file:
+      - ./.env.prod
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongo:27017/barber-management
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:5000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 60s
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        # Inlined by Vite at build time; nginx proxies both paths to `api`.
+        VITE_API_BASE_URL: /api/v1
+        VITE_SOCKET_URL: /
+        VITE_STRIPE_PUBLISHABLE_KEY: ${VITE_STRIPE_PUBLISHABLE_KEY:-}
+    restart: always
+    ports:
+      - "${WEB_PORT:-80}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+
+  # Optional demo data. Wipes every collection, so it only runs when asked for.
+  seed:
+    build: ./backend
+    profiles: ["setup"]
+    command: ["node", "src/seed/index.js"]
+    env_file:
+      - ./.env.prod
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/barber-management
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
+  redis_data:

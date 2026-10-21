@@ -13,9 +13,11 @@ import {
   LockKeyhole,
 } from "lucide-react";
 
-const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
-);
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+
+// Only initialise Stripe when a publishable key is configured: loadStripe rejects
+// without one, which raised an uncaught exception on every page load.
+const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
 function PaymentForm({ onSuccess, onCancel }) {
   const stripe = useStripe();
@@ -170,17 +172,24 @@ function StripePaymentModal({
 
         {/* Payment */}
         <div className="p-5">
-          <Elements
-            stripe={stripePromise}
-            options={{
-              clientSecret,
-            }}
-          >
-            <PaymentForm
-              onSuccess={onSuccess}
-              onCancel={onClose}
-            />
-          </Elements>
+          {stripePromise ? (
+            <Elements
+              stripe={stripePromise}
+              options={{
+                clientSecret,
+              }}
+            >
+              <PaymentForm
+                onSuccess={onSuccess}
+                onCancel={onClose}
+              />
+            </Elements>
+          ) : (
+            <div className="rounded-xl border border-amber-500/30 bg-amber-950/30 px-4 py-3 text-sm text-amber-200">
+              Card payments are unavailable: no Stripe publishable key is
+              configured on this environment.
+            </div>
+          )}
         </div>
       </div>
     </div>

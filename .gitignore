@@ -8,6 +8,8 @@
 .env.*
 !.env.example
 !.env.*.example
+# Committed development placeholders for the Base44 sandbox (no real credentials)
+!.env.base44-defaults
 
 # Logs and runtime files
 **/logs/
