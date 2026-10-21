@@ -1,0 +1,1451 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: "Geist Variable", sans-serif;
+
+  /* Sidebar */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  /* Charts */
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  /* UI */
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* =========================================================
+   ADVANCED MULTI-THEME ENGINE
+   ========================================================= */
+
+/* 1. NJP THEME (Default / National Gov Pakistan) */
+:root,
+[data-theme="njp"] {
+  --background: #0f172b;
+  --foreground: #ffffff;
+  --card: #1e2b3b;
+  --card-foreground: #ffffff;
+  --popover: #1e2b3b;
+  --popover-foreground: #ffffff;
+  --primary: #4a6741;
+  --primary-foreground: #ffffff;
+  --secondary: #172132;
+  --secondary-foreground: #cad5e2;
+  --muted: #172132;
+  --muted-foreground: #90a1b9;
+  --accent: #1d293d;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #485f4d;
+  --input: #45556c;
+  --ring: #8fa985;
+  --radius: 0.75rem;
+
+  --sidebar: #0c1124;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #4a6741;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1d293d;
+  --sidebar-accent-foreground: #cad5e2;
+  --sidebar-border: #485f4d;
+  --sidebar-ring: #8fa985;
+
+  /* Semantic Theme Tokens */
+  --bg-primary: #0f172b;
+  --bg-surface: #1e2b3b;
+  --bg-surface-subtle: rgba(29, 41, 61, 0.5);
+  --bg-elevated: #172132;
+  --bg-sidebar: #0c1124;
+  --border-color: #485f4d;
+  --border-color-subtle: rgba(72, 95, 77, 0.4);
+  --accent-color: #8fa985;
+  --accent-secondary: #4bad46;
+  --btn-gradient-from: #4a6741;
+  --btn-gradient-to: #6b8c5e;
+  --btn-border: #8fa985;
+  --btn-text: #ffffff;
+  --text-main: #ffffff;
+  --text-muted: #90a1b9;
+  --text-subtle: #cad5e2;
+  --ambient-1: rgba(74, 103, 65, 0.15);
+  --ambient-2: rgba(107, 140, 94, 0.1);
+  --topbar-bg: rgba(15, 23, 43, 0.92);
+}
+
+/* 2. PURE WHITE PRO (Executive Clean Day Mode) */
+[data-theme="white"],
+.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #334155;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #e2e8f0;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #0f172a;
+  --radius: 0.75rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0f172a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0f172a;
+
+  /* Semantic Theme Tokens */
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f1f5f9;
+  --bg-elevated: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --border-color: #e2e8f0;
+  --border-color-subtle: rgba(226, 232, 240, 0.8);
+  --accent-color: #0f172a;
+  --accent-secondary: #059669;
+  --btn-gradient-from: #0f172a;
+  --btn-gradient-to: #1e293b;
+  --btn-border: #334155;
+  --btn-text: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-subtle: #334155;
+  --ambient-1: rgba(15, 23, 42, 0.04);
+  --ambient-2: rgba(5, 150, 105, 0.05);
+  --topbar-bg: rgba(255, 255, 255, 0.94);
+}
+
+/* 3. OBSIDIAN & GOLD (Midnight VIP Lounge) */
+[data-theme="luxury-gold"] {
+  --background: #090a0e;
+  --foreground: #fcfcfd;
+  --card: #12141a;
+  --card-foreground: #fcfcfd;
+  --popover: #12141a;
+  --popover-foreground: #fcfcfd;
+  --primary: #c59b27;
+  --primary-foreground: #090a0e;
+  --secondary: #181b23;
+  --secondary-foreground: #e8cd82;
+  --muted: #181b23;
+  --muted-foreground: #a3a199;
+  --accent: #222631;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #7a5f1c;
+  --input: #4a3c16;
+  --ring: #d4af37;
+  --radius: 0.75rem;
+
+  --sidebar: #07080b;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #c59b27;
+  --sidebar-primary-foreground: #090a0e;
+  --sidebar-accent: #181b23;
+  --sidebar-accent-foreground: #e8cd82;
+  --sidebar-border: #7a5f1c;
+  --sidebar-ring: #d4af37;
+
+  /* Semantic Theme Tokens */
+  --bg-primary: #090a0e;
+  --bg-surface: #12141a;
+  --bg-surface-subtle: #181b23;
+  --bg-elevated: #161922;
+  --bg-sidebar: #07080b;
+  --border-color: #7a5f1c;
+  --border-color-subtle: rgba(122, 95, 28, 0.45);
+  --accent-color: #d4af37;
+  --accent-secondary: #f3ba2f;
+  --btn-gradient-from: #b88e20;
+  --btn-gradient-to: #e5b83b;
+  --btn-border: #f7df94;
+  --btn-text: #090a0e;
+  --text-main: #ffffff;
+  --text-muted: #a3a199;
+  --text-subtle: #d9d2c5;
+  --ambient-1: rgba(197, 155, 39, 0.12);
+  --ambient-2: rgba(212, 175, 55, 0.08);
+  --topbar-bg: rgba(9, 10, 14, 0.94);
+}
+
+/* 4. ROYAL INDIGO (Electric Violet & Deep Cosmic Navy) */
+[data-theme="royal-indigo"] {
+  --background: #070b14;
+  --foreground: #f8fafc;
+  --card: #0e1626;
+  --card-foreground: #f8fafc;
+  --popover: #0e1626;
+  --popover-foreground: #f8fafc;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #131e35;
+  --secondary-foreground: #c7d2fe;
+  --muted: #131e35;
+  --muted-foreground: #8b9bb4;
+  --accent: #1d2d4f;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #312e81;
+  --input: #3730a3;
+  --ring: #818cf8;
+  --radius: 0.75rem;
+
+  --sidebar: #05080f;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #131e35;
+  --sidebar-accent-foreground: #c7d2fe;
+  --sidebar-border: #312e81;
+  --sidebar-ring: #818cf8;
+
+  /* Semantic Theme Tokens */
+  --bg-primary: #070b14;
+  --bg-surface: #0e1626;
+  --bg-surface-subtle: #131e35;
+  --bg-elevated: #111b30;
+  --bg-sidebar: #05080f;
+  --border-color: #3730a3;
+  --border-color-subtle: rgba(55, 48, 163, 0.45);
+  --accent-color: #818cf8;
+  --accent-secondary: #38bdf8;
+  --btn-gradient-from: #4f46e5;
+  --btn-gradient-to: #7c3aed;
+  --btn-border: #a5b4fc;
+  --btn-text: #ffffff;
+  --text-main: #ffffff;
+  --text-muted: #8b9bb4;
+  --text-subtle: #c7d2fe;
+  --ambient-1: rgba(79, 70, 229, 0.16);
+  --ambient-2: rgba(124, 58, 237, 0.12);
+  --topbar-bg: rgba(7, 11, 20, 0.94);
+}
+
+/* 5. TITANIUM STEALTH (Studio Minimalist Monochromatic) */
+[data-theme="stealth-titanium"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #141417;
+  --card-foreground: #fafafa;
+  --popover: #141417;
+  --popover-foreground: #fafafa;
+  --primary: #f4f4f5;
+  --primary-foreground: #09090b;
+  --secondary: #1c1c21;
+  --secondary-foreground: #e4e4e7;
+  --muted: #1c1c21;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --border: #2e2e35;
+  --input: #27272a;
+  --ring: #e4e4e7;
+  --radius: 0.75rem;
+
+  --sidebar: #050506;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #f4f4f5;
+  --sidebar-primary-foreground: #09090b;
+  --sidebar-accent: #1c1c21;
+  --sidebar-accent-foreground: #e4e4e7;
+  --sidebar-border: #2e2e35;
+  --sidebar-ring: #e4e4e7;
+
+  /* Semantic Theme Tokens */
+  --bg-primary: #09090b;
+  --bg-surface: #141417;
+  --bg-surface-subtle: #1c1c21;
+  --bg-elevated: #18181d;
+  --bg-sidebar: #050506;
+  --border-color: #2e2e35;
+  --border-color-subtle: rgba(46, 46, 53, 0.6);
+  --accent-color: #fafafa;
+  --accent-secondary: #e4e4e7;
+  --btn-gradient-from: #f4f4f5;
+  --btn-gradient-to: #d4d4d8;
+  --btn-border: #ffffff;
+  --btn-text: #09090b;
+  --text-main: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-subtle: #e4e4e7;
+  --ambient-1: rgba(255, 255, 255, 0.05);
+  --ambient-2: rgba(161, 161, 170, 0.05);
+  --topbar-bg: rgba(9, 9, 11, 0.94);
+}
+
+/* =========================================================
+   DYNAMIC THEME OVERRIDES FOR HARDCODED TAILWIND STYLES
+   ========================================================= */
+
+/* Background overrides */
+[data-theme]:not([data-theme="njp"]) .bg-\[\#0F172B\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#0C1124\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#07111F\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#080f1d\] {
+  background-color: var(--bg-primary) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .bg-\[\#1E2B3B\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#1D293D80\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#172132\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#1D293D\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#1F2C3C\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#213247\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#24332F\] {
+  background-color: var(--bg-surface) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .bg-\[\#45556C\],
+[data-theme]:not([data-theme="njp"]) .bg-\[\#405169\] {
+  background-color: var(--bg-elevated) !important;
+}
+
+/* Border overrides */
+[data-theme]:not([data-theme="njp"]) .border-\[\#485F4D\],
+[data-theme]:not([data-theme="njp"]) .border-\[\#485F4D\]\/70,
+[data-theme]:not([data-theme="njp"]) .border-\[\#485F4D\]\/60,
+[data-theme]:not([data-theme="njp"]) .border-\[\#485F4D\]\/50,
+[data-theme]:not([data-theme="njp"]) .border-\[\#485F4D\]\/40 {
+  border-color: var(--border-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .border-\[\#45556C\],
+[data-theme]:not([data-theme="njp"]) .border-\[\#405169\] {
+  border-color: var(--border-color) !important;
+}
+
+/* Text overrides */
+[data-theme="white"] .text-white {
+  color: var(--text-main) !important;
+}
+
+[data-theme="white"] .text-\[\#90A1B9\],
+[data-theme="white"] .text-slate-400,
+[data-theme="white"] .text-slate-500 {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="white"] .text-\[\#CAD5E2\] {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .text-\[\#8FA985\] {
+  color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .text-\[\#90A1B9\],
+[data-theme]:not([data-theme="njp"]) .text-\[\#64748B\] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .text-\[\#CAD5E2\] {
+  color: var(--text-subtle) !important;
+}
+
+/* Button & Badge gradient overrides */
+[data-theme]:not([data-theme="njp"]) .from-\[\#4A6741\] {
+  --tw-gradient-from: var(--btn-gradient-from) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .to-\[\#6B8C5E\] {
+  --tw-gradient-to: var(--btn-gradient-to) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .via-\[\#6B8C5E\] {
+  --tw-gradient-via: var(--btn-gradient-to) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .from-\[\#8FA985\] {
+  --tw-gradient-from: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .to-\[\#4A6741\] {
+  --tw-gradient-to: var(--btn-gradient-from) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .border-\[\#8FA985\]\/40,
+[data-theme]:not([data-theme="njp"]) .border-\[\#8FA985\] {
+  border-color: var(--btn-border) !important;
+}
+
+/* White Theme Specific Card Shadows & Contrast */
+[data-theme="white"] .bg-\[\#1E2B3B\],
+[data-theme="white"] .bg-\[\#1D293D80\] {
+  box-shadow:
+    0 4px 20px -2px rgba(0, 0, 0, 0.05),
+    0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="white"] .bg-\[\#172132\] {
+  background-color: #f1f5f9 !important;
+}
+
+[data-theme="white"] .border-\[\#485F4D\] {
+  border-color: #e2e8f0 !important;
+}
+
+/*
+  The product predates the theme picker, so some screens use the original
+  NJP utility classes directly.  These theme-aware utilities preserve their
+  layout while ensuring cards, controls and hover states stay coherent in
+  every palette.
+*/
+[data-theme]:not([data-theme="njp"]) .njp-bg {
+  background-color: var(--bg-primary) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .njp-card,
+[data-theme]:not([data-theme="njp"]) .njp-card-solid,
+[data-theme]:not([data-theme="njp"]) .glass-card {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .njp-input {
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .njp-gradient-green,
+[data-theme]:not([data-theme="njp"]) .njp-btn-primary {
+  background: linear-gradient(
+    180deg,
+    var(--btn-gradient-from),
+    var(--btn-gradient-to)
+  ) !important;
+  border-color: var(--btn-border) !important;
+  color: var(--btn-text) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .njp-gradient-green-h {
+  background: linear-gradient(
+    to right,
+    var(--btn-gradient-from),
+    var(--btn-gradient-to),
+    var(--accent-color)
+  ) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) .njp-text-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--accent-color),
+    var(--btn-gradient-to),
+    var(--btn-gradient-from)
+  ) !important;
+}
+
+/* Informational section headers are surfaces, not primary actions.  In light
+   themes they must never inherit a dark button gradient. */
+.walkin-form-header {
+  background: linear-gradient(
+    135deg,
+    var(--bg-surface-subtle),
+    var(--bg-surface)
+  ) !important;
+}
+
+/*
+  Several mature screens have one-off navy shades for nested table rows,
+  popovers and loading states.  They are all dark surface variants (not brand
+  colours), so normalize them here instead of leaving a mismatched old-blue
+  island when a customer selects a new theme.
+*/
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#1"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#2"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#3"] {
+  background-color: var(--bg-surface) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="border-[#0"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#1"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#2"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#3"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#4"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#5"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#6"],
+[data-theme]:not([data-theme="njp"]) [class*="border-[#7"] {
+  border-color: var(--border-color) !important;
+}
+
+/* Re-apply the core surface hierarchy after the legacy compatibility rules. */
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0F"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0f"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0C"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0c"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#07"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#08"] {
+  background-color: var(--bg-primary) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#172132"] {
+  background-color: var(--bg-elevated) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#1D293D"] {
+  background-color: var(--bg-surface-subtle) !important;
+}
+
+/* Tailwind neutral utilities used by older tables, empty states and dialogs. */
+[data-theme]:not([data-theme="njp"]) [class*="bg-slate-"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-gray-"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-zinc-"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-neutral-"] {
+  background-color: var(--bg-surface) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="border-slate-"],
+[data-theme]:not([data-theme="njp"]) [class*="border-gray-"],
+[data-theme]:not([data-theme="njp"]) [class*="border-zinc-"],
+[data-theme]:not([data-theme="njp"]) [class*="border-neutral-"] {
+  border-color: var(--border-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="text-slate-"],
+[data-theme]:not([data-theme="njp"]) [class*="text-gray-"],
+[data-theme]:not([data-theme="njp"]) [class*="text-zinc-"],
+[data-theme]:not([data-theme="njp"]) [class*="text-neutral-"] {
+  color: var(--text-muted) !important;
+}
+
+/* Edit Branch uses Lime as its former primary UI colour, not as a success
+   status.  Bind its controls and icons to the selected theme instead. */
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="text-lime-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="text-emerald-"] {
+  color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="border-lime-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="ring-lime-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="border-emerald-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="ring-emerald-"] {
+  border-color: var(--accent-color) !important;
+  --tw-ring-color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="bg-lime-"]:not([class*="peer-checked:"]),
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="bg-emerald-"]:not([class*="peer-checked:"]) {
+  background-color: var(--btn-gradient-from) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="bg-lime-"][class*="/"]:not([class*="peer-checked:"]),
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="bg-emerald-"][class*="/"]:not([class*="peer-checked:"]) {
+  background-color: var(--ambient-1) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  input.peer:checked
+  ~ [class*="peer-checked:bg-lime-"] {
+  background-color: var(--btn-gradient-from) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="shadow-lime-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  [class*="shadow-emerald-"] {
+  --tw-shadow-color: var(--ambient-1) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  button[class*="bg-lime-"],
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  button[class*="bg-emerald-"] {
+  color: var(--btn-text) !important;
+}
+
+/* =========================================================
+   ICON COLOUR HIERARCHY
+   =========================================================
+   Lucide icons inherit colour from their host element.  Older screens mix
+   that with fixed Slate/Lime/White utility classes, which made icons look
+   washed out in White mode and inconsistent in the dark palettes.  These
+   rules give every theme one predictable icon system:
+   - standalone icons: theme accent
+   - neutral/navigation icons: muted text token
+   - icons inside primary actions: button foreground for reliable contrast
+*/
+[data-theme]:not([data-theme="njp"]) svg.lucide:not([class*="text-"]) {
+  color: var(--accent-color);
+}
+
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-slate-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-gray-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-zinc-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-neutral-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#90A1B9"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#64748B"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#8FA985"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-lime-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-emerald-"] {
+  color: var(--accent-color) !important;
+}
+
+/* A button icon should always match the button label, including loading and
+   disabled states. */
+[data-theme]:not([data-theme="njp"]) button svg.lucide {
+  color: inherit !important;
+}
+
+/* Legacy raw gradients are primary actions (CTA, active sidebar item, save
+   controls).  Their text and icons must use the palette's contrast token. */
+[data-theme]:not([data-theme="njp"])
+  :is(button, a)[class*="bg-gradient"][class*="from-[#"] {
+  color: var(--btn-text) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  :is(button, a)[class*="bg-gradient"][class*="from-[#"]
+  svg.lucide,
+[data-theme]:not([data-theme="njp"])
+  [class*="bg-gradient"][class*="from-[#"]
+  svg.lucide,
+[data-theme]:not([data-theme="njp"])
+  [class*="bg-[#4A6741"]:not([class*="/"])
+  svg.lucide,
+[data-theme]:not([data-theme="njp"])
+  :is(.branch-editor, .branch-creator)
+  button
+  svg.lucide {
+  color: var(--btn-text) !important;
+}
+
+/* Analytics has dense metric cards; its old green-blue icon shades are
+   normalized to one deliberate accent colour.  Status dots remain semantic. */
+[data-theme]:not([data-theme="njp"]) .slot-analytics svg.lucide {
+  color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"])
+  .slot-analytics
+  [class*="bg-gradient"][class*="from-[#"]
+  svg.lucide {
+  color: var(--btn-text) !important;
+}
+
+/* Remaining hand-picked icon shades in legacy components are decorative UI
+   colours, so treat them as the active theme accent.  Muted and destructive
+   icon colours retain their semantic purpose. */
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-blue-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-cyan-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-sky-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-indigo-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-violet-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-purple-"] {
+  color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#90A1B9"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#64748B"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#708197"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#708198"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#d17b82"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-[#D17B82"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-red-"],
+[data-theme]:not([data-theme="njp"]) svg.lucide[class*="text-rose-"] {
+  color: var(--destructive) !important;
+}
+
+/* Account avatars are primary identity marks, so their initials must always
+   use the button foreground—not the page foreground in White theme. */
+.user-avatar {
+  background: linear-gradient(
+    180deg,
+    var(--btn-gradient-from),
+    var(--btn-gradient-to)
+  ) !important;
+  color: var(--btn-text) !important;
+  border: 1px solid var(--btn-border);
+}
+
+.topbar-user-card,
+.sidebar-user-card {
+  background-color: var(--bg-surface-subtle) !important;
+  border-color: var(--border-color) !important;
+}
+
+.user-avatar-status {
+  background-color: var(--accent-secondary) !important;
+  --tw-ring-color: var(--bg-sidebar) !important;
+}
+
+/* Payment status colours are semantic, but their surfaces need enough contrast
+   on both light and dark themes. */
+.payment-status--paid {
+  border-color: #05966966 !important;
+  background: #05966918 !important;
+  color: #047857 !important;
+}
+.payment-status-dot--paid {
+  background-color: #059669 !important;
+}
+.payment-status--pending {
+  border-color: #d9770666 !important;
+  background: #f59e0b1f !important;
+  color: #a16207 !important;
+}
+.payment-status-dot--pending {
+  background-color: #f59e0b !important;
+}
+.payment-status--failed {
+  border-color: #e11d4866 !important;
+  background: #e11d4817 !important;
+  color: #be123c !important;
+}
+.payment-status-dot--failed {
+  background-color: #e11d48 !important;
+}
+.payment-status--refunded,
+.payment-status--unknown {
+  border-color: var(--border-color) !important;
+  background: var(--bg-elevated) !important;
+  color: var(--text-muted) !important;
+}
+.payment-status-dot--refunded,
+.payment-status-dot--unknown {
+  background-color: var(--text-muted) !important;
+}
+.payment-status svg {
+  color: inherit !important;
+}
+
+[data-theme]:not([data-theme="white"]) .payment-status--paid {
+  color: #6ee7b7 !important;
+}
+[data-theme]:not([data-theme="white"]) .payment-status--pending {
+  color: #fbbf24 !important;
+}
+[data-theme]:not([data-theme="white"]) .payment-status--failed {
+  color: #fda4af !important;
+}
+
+.payment-details-modal {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+}
+
+.payment-summary {
+  background: linear-gradient(
+    135deg,
+    var(--bg-surface-subtle),
+    var(--bg-surface)
+  ) !important;
+  border-color: var(--border-color) !important;
+}
+
+.payment-summary-icon {
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--border-color) !important;
+}
+
+.payment-summary-icon svg {
+  color: var(--accent-color) !important;
+}
+
+/* Higher specificity than the legacy .text-white rule used by avatar markup. */
+[data-theme] .user-avatar.text-white {
+  color: var(--btn-text) !important;
+}
+
+/*
+  Full legacy component coverage
+  ------------------------------
+  Every old component uses Tailwind arbitrary colour utilities.  Attribute
+  selectors deliberately include regular, hover, focus and disabled variants,
+  so a create/edit modal behaves exactly like a dashboard card after a theme
+  change.  Tailwind's semantic red/amber/emerald status utilities are not
+  touched, preserving the meaning of errors, warnings and success messages.
+*/
+[data-theme]:not([data-theme="njp"]) [class*="text-[#"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#"] {
+  background-color: var(--bg-surface) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="border-[#"],
+[data-theme]:not([data-theme="njp"]) [class*="ring-[#"] {
+  border-color: var(--border-color) !important;
+  --tw-ring-color: var(--border-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="from-[#"] {
+  --tw-gradient-from: var(--btn-gradient-from) !important;
+  --tw-gradient-to: color-mix(
+    in srgb,
+    var(--btn-gradient-from),
+    transparent 0%
+  ) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="via-[#"] {
+  --tw-gradient-via: var(--btn-gradient-to) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="to-[#"] {
+  --tw-gradient-to: var(--btn-gradient-to) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="shadow-[#"] {
+  --tw-shadow-color: var(--ambient-1) !important;
+}
+
+/* Core text, emphasis and interactive states keep their intended hierarchy. */
+[data-theme]:not([data-theme="njp"]) [class*="text-[#FFFFFF"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#ffffff"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#F8FAFC"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#FAFAFA"] {
+  color: var(--text-main) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="text-[#CAD5E2"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#C7D2E1"] {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="text-[#8FA985"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#9bc47e"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#9BC47E"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#4bad46"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#4BAD46"] {
+  color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="text-[#90A1B9"],
+[data-theme]:not([data-theme="njp"]) [class*="text-[#64748B"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="border-[#8FA985"],
+[data-theme]:not([data-theme="njp"]) [class*="ring-[#8FA985"] {
+  border-color: var(--accent-color) !important;
+  --tw-ring-color: var(--accent-color) !important;
+}
+
+/* Brand fills and translucent decorative accents. */
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4A6741"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4a6741"] {
+  background-color: var(--btn-gradient-from) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#6B8C5E"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#6b8c5e"] {
+  background-color: var(--btn-gradient-to) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#8FA985"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#8fa985"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#9bc47e"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#9BC47E"] {
+  background-color: var(--accent-color) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4bad46"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4BAD46"] {
+  background-color: var(--accent-secondary) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4A6741]/"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#4a6741]/"] {
+  background-color: var(--ambient-1) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#6B8C5E]/"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#6b8c5e]/"] {
+  background-color: var(--ambient-2) !important;
+}
+
+/* Primary / elevated / subtle layers are deliberately more specific than the
+   catch-all rule above, preserving depth on every legacy screen. */
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0F"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0f"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0C"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#0c"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#07"],
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#08"] {
+  background-color: var(--bg-primary) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#172132"] {
+  background-color: var(--bg-elevated) !important;
+}
+
+[data-theme]:not([data-theme="njp"]) [class*="bg-[#1D293D"] {
+  background-color: var(--bg-surface-subtle) !important;
+}
+
+/* Gold Theme Specific Card Borders */
+[data-theme="luxury-gold"] .border-\[\#485F4D\] {
+  border-color: #7a5f1c !important;
+}
+
+[data-theme="luxury-gold"] .from-\[\#4A6741\] {
+  --tw-gradient-from: #b88e20 !important;
+}
+
+[data-theme="luxury-gold"] .to-\[\#6B8C5E\] {
+  --tw-gradient-to: #e5b83b !important;
+}
+
+[data-theme="luxury-gold"] .text-\[\#8FA985\] {
+  color: #d4af37 !important;
+}
+
+/* Royal Indigo Specific */
+[data-theme="royal-indigo"] .border-\[\#485F4D\] {
+  border-color: #3730a3 !important;
+}
+
+[data-theme="royal-indigo"] .from-\[\#4A6741\] {
+  --tw-gradient-from: #4f46e5 !important;
+}
+
+[data-theme="royal-indigo"] .to-\[\#6B8C5E\] {
+  --tw-gradient-to: #7c3aed !important;
+}
+
+[data-theme="royal-indigo"] .text-\[\#8FA985\] {
+  color: #818cf8 !important;
+}
+
+/* Titanium Stealth Specific */
+[data-theme="stealth-titanium"] .border-\[\#485F4D\] {
+  border-color: #2e2e35 !important;
+}
+
+[data-theme="stealth-titanium"] .from-\[\#4A6741\] {
+  --tw-gradient-from: #f4f4f5 !important;
+}
+
+[data-theme="stealth-titanium"] .to-\[\#6B8C5E\] {
+  --tw-gradient-to: #d4d4d8 !important;
+}
+
+[data-theme="stealth-titanium"] .text-\[\#8FA985\] {
+  color: #fafafa !important;
+}
+
+[data-theme="stealth-titanium"]
+  .bg-gradient-to-b.from-\[\#4A6741\].to-\[\#6B8C5E\],
+[data-theme="stealth-titanium"]
+  .bg-gradient-to-r.from-\[\#4A6741\].to-\[\#6B8C5E\] {
+  color: #09090b !important;
+}
+
+/* =========================================================
+   FINAL LEGACY PALETTE NORMALIZATION
+   =========================================================
+   A few older surfaces use a second navy palette which bypasses the main
+   theme remapping above. Keep those components on the same surface hierarchy
+   and readable text tokens as the rest of the application.
+*/
+[data-theme] [class*="bg-[#111B2B"],
+[data-theme] [class*="bg-[#111b2d"],
+[data-theme] [class*="bg-[#172437"],
+[data-theme] [class*="bg-[#172536"],
+[data-theme] [class*="bg-[#223447"],
+[data-theme] [class*="bg-[#1a2a3b"],
+[data-theme] [class*="bg-[#263A2A"] {
+  background-color: var(--bg-elevated) !important;
+}
+
+[data-theme] [class*="border-[#2B3A4E"],
+[data-theme] [class*="border-[#33445A"],
+[data-theme] [class*="border-[#304156"],
+[data-theme] [class*="border-[#3C5068"],
+[data-theme] [class*="border-[#3c5363"] {
+  border-color: var(--border-color) !important;
+}
+
+[data-theme] [class*="text-[#D8E0EA"],
+[data-theme] [class*="text-[#E4EDDF"],
+[data-theme] [class*="text-[#CADCC5"],
+[data-theme] [class*="text-[#AEBBCB"],
+[data-theme] [class*="text-[#A8BE9F"] {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme] [class*="text-[#7F91A9"],
+[data-theme] [class*="text-[#708198"],
+[data-theme] [class*="text-[#71829B"],
+[data-theme] [class*="text-[#62738A"] {
+  color: var(--text-muted) !important;
+}
+
+/* Keep the global controls legible when a legacy component supplies only a
+   background and border utility. */
+[data-theme] input,
+[data-theme] textarea,
+[data-theme] select {
+  color: var(--text-main);
+  background-color: var(--bg-elevated);
+  border-color: var(--border-color);
+}
+
+[data-theme] input::placeholder,
+[data-theme] textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+[data-theme] :is(input, textarea, select):focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 78%);
+}
+
+[data-theme] ::selection {
+  background: color-mix(in srgb, var(--accent-color), transparent 72%);
+  color: var(--text-main);
+}
+
+/* =========================================================
+   THEME-AWARE BUTTON CONTRAST
+   =========================================================
+   Primary buttons often keep legacy text-white classes while their
+   backgrounds are remapped by the active theme.  These rules make the
+   foreground follow the button surface, including inherited icon colour.
+*/
+[data-theme] :is(button, a)[class*="bg-gradient"] {
+  color: var(--btn-text) !important;
+}
+
+[data-theme] :is(button, a)[class*="bg-[#4A6741"],
+[data-theme] :is(button, a)[class*="bg-[#4a6741"],
+[data-theme] :is(button, a)[class*="bg-[#6B8C5E"],
+[data-theme] :is(button, a)[class*="bg-[#6b8c5e"],
+[data-theme] :is(button, a)[class*="bg-[#8FA985"],
+[data-theme] :is(button, a)[class*="bg-[#8fa985"],
+[data-theme] :is(button, a)[class*="bg-lime-"],
+[data-theme] :is(button, a)[class*="bg-emerald-"] {
+  color: var(--btn-text) !important;
+}
+
+[data-theme] :is(button, a)[class*="bg-[#172132"],
+[data-theme] :is(button, a)[class*="bg-[#1D293D"],
+[data-theme] :is(button, a)[class*="bg-[#1d293d"],
+[data-theme] :is(button, a)[class*="bg-slate-"],
+[data-theme] :is(button, a)[class*="bg-gray-"] {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme] :is(button, a)[class*="bg-rose-"],
+[data-theme] :is(button, a)[class*="bg-red-"] {
+  color: #ffffff !important;
+}
+
+[data-theme] :is(button, a):disabled {
+  color: color-mix(in srgb, var(--text-muted), transparent 12%) !important;
+}
+
+[data-theme] :is(button, a)[class*="bg-gradient"] svg,
+[data-theme] :is(button, a)[class*="bg-[#4A6741"] svg,
+[data-theme] :is(button, a)[class*="bg-[#4a6741"] svg,
+[data-theme] :is(button, a)[class*="bg-[#6B8C5E"] svg,
+[data-theme] :is(button, a)[class*="bg-[#6b8c5e"] svg,
+[data-theme] :is(button, a)[class*="bg-lime-"] svg,
+[data-theme] :is(button, a)[class*="bg-emerald-"] svg {
+  color: inherit !important;
+}
+
+/* Auth screens use a compact, theme-aware surface system.  Keep the ribbon
+   as an accent strip, while the page and form controls follow the selected
+   palette instead of browser autofill or legacy navy classes. */
+[data-theme] .auth-page {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme] .auth-card {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme] .auth-ribbon {
+  background: linear-gradient(
+    135deg,
+    var(--btn-gradient-from),
+    var(--btn-gradient-to)
+  ) !important;
+  color: var(--btn-text) !important;
+}
+
+[data-theme] .auth-ribbon :is(h2, p, svg) {
+  color: var(--btn-text) !important;
+}
+
+[data-theme] .auth-input {
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+  caret-color: var(--accent-color);
+}
+
+[data-theme] .auth-input::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1;
+}
+
+[data-theme] .auth-input:focus {
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 78%) !important;
+}
+
+[data-theme] .auth-input:-webkit-autofill,
+[data-theme] .auth-input:-webkit-autofill:hover,
+[data-theme] .auth-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-main) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-elevated) inset !important;
+  caret-color: var(--accent-color);
+}
+
+[data-theme] .auth-primary {
+  background: linear-gradient(
+    180deg,
+    var(--btn-gradient-from),
+    var(--btn-gradient-to)
+  ) !important;
+  border-color: var(--btn-border) !important;
+  color: var(--btn-text) !important;
+}
+
+[data-theme] .auth-primary svg {
+  color: inherit !important;
+}
+
+/* =========================================================
+   GLOBAL BASE
+   ========================================================= */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:not(:disabled),
+  a {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  ::selection {
+    background: oklch(0.205 0.015 260 / 15%);
+    color: oklch(0.145 0.015 260);
+  }
+}
+
+/* =========================================================
+   GLOBAL SCROLLBAR
+   ========================================================= */
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.78 0.01 260 / 70%) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: oklch(0.78 0.01 260 / 70%);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.65 0.015 260 / 80%);
+  }
+}
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
+
+@layer base {
+  input,
+  textarea,
+  select {
+    @apply outline-none;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: oklch(0.58 0.015 260);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   ENTERPRISE & NJP (njp.gov.pk) DESIGN SYSTEM
+   ========================================================= */
+
+@layer utilities {
+  /* NJP Dark Surfaces */
+  .njp-bg {
+    background-color: #0f172b;
+  }
+
+  .njp-card {
+    background: rgba(29, 41, 61, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #485f4d;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .njp-card:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: #8fa985;
+    box-shadow:
+      0 12px 30px -8px rgba(0, 0, 0, 0.5),
+      0 0 20px -3px rgba(74, 103, 65, 0.25);
+    transform: translateY(-2px) scale(1.005);
+  }
+
+  .njp-card-solid {
+    background-color: #1e2b3b;
+    border: 1px solid #485f4d;
+    border-radius: 16px;
+  }
+
+  .njp-input {
+    background-color: #172132;
+    border: 1px solid #485f4d;
+    color: #ffffff;
+    border-radius: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .njp-input:focus {
+    border-color: #4bad46;
+    box-shadow: 0 0 0 3px rgba(75, 173, 70, 0.2);
+  }
+
+  /* NJP Green Gradients */
+  .njp-gradient-green {
+    background: linear-gradient(180deg, #4a6741 0%, #6b8c5e 100%);
+  }
+
+  .njp-gradient-green-h {
+    background: linear-gradient(to right, #4a6741, #6b8c5e, #8fa985);
+  }
+
+  .njp-text-gradient {
+    background: linear-gradient(to right, #8fa985, #6b8c5e, #4a6741);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* NJP Border Lines */
+  .njp-border-gradient-b {
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(to right, #485f4d, #0c1124, #485f4d) 1;
+  }
+
+  .njp-border-gradient-t {
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(to right, #485f4d, #0c1124, #485f4d) 1;
+  }
+
+  /* NJP Button styles */
+  .njp-btn-primary {
+    background: linear-gradient(180deg, #4a6741 0%, #6b8c5e 100%);
+    color: #ffffff;
+    border: 1px solid #8fa985;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+  }
+
+  .njp-btn-primary:hover {
+    opacity: 0.95;
+    box-shadow: 0 8px 20px -4px rgba(74, 103, 65, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .njp-btn-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #485f4d;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .njp-btn-outline:hover {
+    background: linear-gradient(180deg, #4a6741 0%, #6b8c5e 100%);
+    border-color: #8fa985;
+    box-shadow: 0 8px 20px -4px rgba(74, 103, 65, 0.35);
+  }
+
+  /* Micro utilities */
+  .glass-card {
+    background: rgba(29, 41, 61, 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid #485f4d;
+  }
+
+  .glass-card-dark {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(72, 95, 77, 0.5);
+  }
+
+  .cute-glow-indigo {
+    box-shadow: 0 0 20px -3px rgba(74, 103, 65, 0.35);
+  }
+
+  .cute-glow-emerald {
+    box-shadow: 0 0 20px -3px rgba(75, 173, 70, 0.35);
+  }
+
+  .cute-glow-amber {
+    box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.25);
+  }
+
+  .cute-card-hover {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cute-card-hover:hover {
+    transform: translateY(-2px);
+    border-color: #8fa985;
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.4);
+  }
+}
