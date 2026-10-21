@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import { connectDB } from '../config/database.js';
 import logger from '../config/logger.js';
 
@@ -23,12 +22,12 @@ const seedData = async () => {
     await Chair.deleteMany({});
     logger.info('Cleared existing data');
 
-    // Create admin user
-    const adminPassword = await bcrypt.hash('admin123', 10);
+    // Create admin user. Passwords are given in plain text on purpose: the
+    // User model's pre-save hook performs the (single) hashing.
     const admin = new User({
       name: 'Admin User',
       email: 'admin@barber.com',
-      password: adminPassword,
+      password: 'admin123',
       role: 'admin',
       phone: '+1234567890',
       isActive: true,
@@ -152,11 +151,10 @@ const seedData = async () => {
     logger.info(`${chairs.length} chairs created`);
 
     // Create barber
-    const barberPassword = await bcrypt.hash('barber123', 10);
     const barberUser = new User({
       name: 'John Barber',
       email: 'barber@barber.com',
-      password: barberPassword,
+      password: 'barber123',
       role: 'barber',
       phone: '+92123456780',
       isActive: true,
@@ -182,11 +180,10 @@ const seedData = async () => {
     logger.info(`Barber created: ${barberUser.email}`);
 
     // Create a customer
-    const customerPassword = await bcrypt.hash('customer123', 10);
     const customer = new User({
       name: 'Ali Customer',
       email: 'customer@barber.com',
-      password: customerPassword,
+      password: 'customer123',
       role: 'customer',
       phone: '+92123456781',
       isActive: true,

@@ -31,9 +31,22 @@ app.use(
   }),
 );
 
+// Browser origins allowed to call this API. The Vite dev origin is always
+// allowed. In the Base44 sandbox the frontend is served from the preview host on
+// port 3000 instead, so that origin is added when the platform sets
+// BASE44_PREVIEW_MODE=1 (it is never set elsewhere; the original behaviour with
+// the flag unset is unchanged).
+const allowedOrigins = ["http://localhost:5173"];
+if (
+  process.env.BASE44_PREVIEW_MODE === "1" &&
+  process.env.BASE44_PUBLIC_HOST_SUFFIX
+) {
+  allowedOrigins.push(`https://3000-${process.env.BASE44_PUBLIC_HOST_SUFFIX}`);
+}
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );

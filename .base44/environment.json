@@ -1,0 +1,63 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "JWT_SECRET",
+      "description": "Signs and verifies the API's JWT access tokens. A development value is generated for the sandbox; review before any real deployment.",
+      "requiredAtBoot": true,
+      "generatedForDevelopment": true
+    },
+    {
+      "name": "STRIPE_SECRET_KEY",
+      "description": "Stripe secret key (Stripe dashboard > Developers > API keys, sk_test_...). The API needs a non-empty value to boot; a committed development placeholder keeps the app running, but payment intents, refunds and webhooks stay non-functional until the real key is provided.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "STRIPE_WEBHOOK_SECRET",
+      "description": "Stripe webhook signing secret (Stripe dashboard > Developers > Webhooks, whsec_...). Only needed to verify /api/v1/payments/webhook calls.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLOUDINARY_CLOUD_NAME",
+      "description": "Cloudinary cloud name (Cloudinary console > Dashboard). Needed for profile image uploads.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLOUDINARY_API_KEY",
+      "description": "Cloudinary API key (Cloudinary console > Dashboard). Needed for profile image uploads.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLOUDINARY_API_SECRET",
+      "description": "Cloudinary API secret (Cloudinary console > Dashboard). Needed for profile image uploads.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "SMTP_HOST",
+      "description": "Outgoing mail server hostname (for example smtp.gmail.com or a transactional provider such as SendGrid/Mailgun). Needed for notification emails.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "SMTP_PORT",
+      "description": "Outgoing mail server port (587 for STARTTLS). Needed for notification emails.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "SMTP_USER",
+      "description": "SMTP username / sender address used for notification emails.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "SMTP_PASS",
+      "description": "SMTP password or provider API key used for notification emails.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_STRIPE_PUBLISHABLE_KEY",
+      "description": "Stripe publishable key (Stripe dashboard > Developers > API keys, pk_test_...). Public by design; the browser needs it to render the Stripe payment element.",
+      "requiredAtBoot": false
+    }
+  ]
+}
