@@ -89,6 +89,22 @@ that creates users must pass a plain password.
   publishable key" notice instead of the card element. Pass the user's Stripe
   keys through secrets to enable payments.
 
+## Deploying for real
+
+The sandbox compose file is development only. `docker-compose.prod.yml` plus
+`backend/Dockerfile`, `frontend/Dockerfile` and `frontend/nginx.conf` run the
+same app on one origin (nginx serves the built SPA and proxies `/api` and
+`/socket.io` to the API, so no CORS entry is needed). `DEPLOYMENT.md` has the
+full steps; the short version:
+
+```bash
+cp .env.prod.example .env.prod     # real secrets; the file is gitignored
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+```
+
+`--env-file` matters: the frontend's `VITE_*` values are build args interpolated
+from that file. `WEB_PORT` defaults to 80; put a TLS terminator in front.
+
 ### How to verify the stack
 
 ```bash
