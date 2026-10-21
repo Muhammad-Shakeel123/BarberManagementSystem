@@ -64,10 +64,11 @@ that creates users must pass a plain password.
 - Optional integrations degrade instead of failing: unset Cloudinary credentials
   make image upload return 503, and unset SMTP makes notification emails fail at
   send time (the transporter is created lazily). Without
-  `VITE_STRIPE_PUBLISHABLE_KEY` the payments screen still renders, but Stripe.js
-  logs `Expected publishable key to be of type string, got type undefined` and no
-  card element can mount, so pass the user's Stripe keys through secrets before
-  exercising payments.
+  `VITE_STRIPE_PUBLISHABLE_KEY`, `loadStripe` is not called at all (it rejects
+  with "Expected publishable key to be of type string" otherwise, as an uncaught
+  exception on every page load) and the payment modal shows a "no Stripe
+  publishable key" notice instead of the card element. Pass the user's Stripe
+  keys through secrets to enable payments.
 
 ### How to verify the stack
 
