@@ -29,10 +29,29 @@ login screen cannot be used. Run the seed job once after the first boot:
 docker compose -f docker-compose.base44.yml --profile setup run --rm seed
 ```
 
-`src/seed/index.js` **deletes all users, branches, barber profiles, services and
-chairs** before inserting its fixtures, so it sits behind the `setup` profile and
-a plain `up` never starts it. Seeded accounts: `admin@barber.com` / `admin123`,
-`barber@barber.com` / `barber123`, `customer@barber.com` / `customer123`.
+`src/seed/index.js` **deletes every collection** (users, branches, barber
+profiles, services, chairs, appointments, payments, queues, audit logs) before
+rebuilding the demo dataset, so it sits behind the `setup` profile and a plain
+`up` never starts it. Seeded accounts: `admin@barber.com` / `admin123`,
+`barber@barber.com` / `barber123`, `sara@barber.com` / `barber123` (second
+barber), `customer@barber.com` / `customer123`, `hina@barber.com` /
+`customer123`, `bilal@barber.com` / `customer123`.
+
+The fixtures themselves live in `src/seed/demoData.js` (`ensureDemoData()`),
+which is idempotent: it looks up each record by its natural key (email, branch
+code, service name) and only creates what is missing. To fill a database that
+already has accounts and records — the common case in the sandbox — run it
+without the wipe:
+
+```bash
+docker compose -f docker-compose.base44.yml exec -T api npm run seed:demo
+```
+
+It creates 2 branches, 2 barbers, 5 services, 8 chairs, 10 appointments
+(completed / in progress / confirmed / booked / cancelled / no-show /
+rescheduled, dated relative to "now"), 5 payments (paid, refunded, pending),
+3 queue entries and 6 audit-log rows. Activity rows are skipped if appointments
+already exist, so re-running never duplicates them.
 
 The seed hands those passwords to the model in plain text: `User` has a
 `pre`-`save` hook that hashes the password, so hashing it inside the seed too
